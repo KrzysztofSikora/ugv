@@ -41,8 +41,7 @@ export class MovementService implements OnModuleInit {
     });
 
     this.parser.on('data', (data) => {
-      /* Sending movement direction message received from 868Mhz */
-      console.log('Received message:', data);
+      console.log('Received message from 868Mhz:', data);
       if (data) this.sendMessage(data);
     });
   }
