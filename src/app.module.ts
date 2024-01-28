@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MovementModule } from './movement/movement.module';
-import {MovementService} from "./movement/movement.service";
-
 
 @Module({
   imports: [MovementModule],
