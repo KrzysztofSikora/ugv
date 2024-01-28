@@ -4,9 +4,7 @@ import { CreateMovementDto } from './dto/create-movement.dto';
 
 @Controller('movement')
 export class MovementController {
-  constructor(private readonly movementService: MovementService) {
-    // this.movementService.startSerialPortConnection();
-  }
+  constructor(private readonly movementService: MovementService) {}
 
   @Post('/')
   move(@Body() createMovementDto: CreateMovementDto) {

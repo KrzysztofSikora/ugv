@@ -6,6 +6,5 @@ import { MovementController } from './movement.controller';
   controllers: [MovementController],
   providers: [MovementService],
   exports: [MovementService],
-
 })
 export class MovementModule {}
