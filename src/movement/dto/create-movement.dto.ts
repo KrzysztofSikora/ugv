@@ -1,9 +1,17 @@
 import { IsIn, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-type DirectionType = 'FORWARD' | 'BACK' | 'RIGHT' | 'LEFT';
-const validDirections: DirectionType[] = ['FORWARD', 'BACK', 'RIGHT', 'LEFT'];
+export type DirectionType = 'FORWARD' | 'BACK' | 'RIGHT' | 'LEFT' | 'STOP';
+const validDirections: DirectionType[] = [
+  'FORWARD',
+  'BACK',
+  'RIGHT',
+  'LEFT',
+  'STOP',
+];
 
 export class CreateMovementDto {
+  @ApiProperty({ examples: validDirections })
   @IsNotEmpty()
   @IsIn(validDirections, { message: 'Invalid direction' })
   direction: DirectionType;
