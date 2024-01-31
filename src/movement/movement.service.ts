@@ -29,7 +29,10 @@ export class MovementService implements OnModuleInit {
     this.communicationSerialPort = new SerialPort({
       path: this.communicationSerialPortPath,
       baudRate: 115200,
+    }).on('error', (error) => {
+      console.log(error);
     });
+
     this.parser = this.communicationSerialPort.pipe(
       new ReadlineParser({ delimiter: '\n' }),
     );
@@ -42,7 +45,13 @@ export class MovementService implements OnModuleInit {
 
     this.parser.on('data', (data) => {
       console.log('Received message from 868Mhz:', data);
-      if (data) this.sendMessage(data);
+      if (data.includes('ping')) {
+        setTimeout(() => {
+          this.pingMessage(data);
+        }, 3000);
+      } else {
+        this.sendMessage(data);
+      }
     });
   }
 
@@ -53,6 +62,8 @@ export class MovementService implements OnModuleInit {
     this.movementSerialPort = new SerialPort({
       path: this.movementSerialPortPath,
       baudRate: 115200,
+    }).on('error', (error) => {
+      console.log(error);
     });
 
     this.movementSerialPort.on('open', () => {
@@ -69,6 +80,9 @@ export class MovementService implements OnModuleInit {
     return { action: `Move to direction: ${createMovementDto.direction}` };
   }
 
+  pingMessage(message: string) {
+    this.communicationSerialPort.write(`Server message: ${message}\n`);
+  }
   /**
    * Send message by serial port to movement controller.
    * @param message
